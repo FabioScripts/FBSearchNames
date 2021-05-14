@@ -1,0 +1,84 @@
+#!/bin/sh
+
+clear
+
+echo
+
+echo "Iniciando...."
+echo
+echo "Aguarde alguns minutos..."
+echo
+
+pdfgrep -i "$lines" *pdf > listaTemp
+
+sleep 1 
+
+clear
+
+echo & echo 
+echo Analisando.....
+
+sleep 1
+
+touch namesTemp
+
+echo -e "\nName01\nName02" > namesTemp
+
+sleep 1
+
+clear
+
+echo "Localizando nomes"
+grep -i -wFf namesTemp listaTemp > ~/Resultados
+
+echo & echo
+
+grep -iwF | sed -i -e 's/$/ \n/' namesTemp ~/Resultados
+
+sleep 1
+
+rm namesTemp listaTemp
+
+dia=`date +%d`
+mes=`date +%b`
+
+cp ~/Resultados ~/Resultado-$dia-$mes
+
+
+sleep 1
+
+cp ~/Resultados ~/Resultado-$dia-$mes.txt
+
+sleep 1
+
+rm ~/Resultados
+
+echo & echo & echo
+
+unoconv -f pdf ~/Resultado-$dia-$mes ~/
+
+sleep 1
+
+rm ~/Resultado-$dia-$mes
+
+clear
+
+echo
+
+sleep 1
+
+ansilove -o ~/Resultado.png ~/Resultado-$dia-$mes.txt
+
+sleep 1
+
+clear
+
+echo "Nomes da lista"
+
+echo
+
+cat ~/Resultado-$dia-$mes.txt
+
+echo
+
+exit
